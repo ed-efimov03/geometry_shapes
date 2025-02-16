@@ -72,23 +72,66 @@ Triangle(a: tuple, b: tuple, c: tuple)
 
 ## Примеры использования
 
-### Работа с окружностью
+#### **Примитивы:**
 ```python
-circle = Circle(0, 0, 5)
-print(circle.area())  # Выведет 78.5398
-print(circle.contains_point(3, 4))  # Выведет True
+from geometry import Circle, Rectangle, Triangle
+
+# Создание кругов
+circle1 = Circle(center_x=4, center_y=4, radius=5)
+circle2 = Circle(center_x=6, center_y=6, radius=3)
+
+# Проверка пересечения кругов
+print("Круги пересекаются:", circle1.intersects(circle2))  # Ожидаемый результат: True
+
+# Создание прямоугольников
+rect1 = Rectangle(x=0, y=0, width=10, height=5)
+rect2 = Rectangle(x=5, y=2, width=3, height=2)
+
+# Проверка вложенности прямоугольников
+print("rect2 находится внутри rect1:", rect1.contains_rectangle(rect2))  # Ожидаемый результат: True
+
+# Проверка пересечения прямоугольников
+print("Прямоугольники пересекаются:", rect1.intersects(rect2))  # Ожидаемый результат: True
+
+# Создание треугольника
+triangle = Triangle(a=(0, 0), b=(4, 0), c=(2, 3))
+
+# Проверка валидности треугольника
+print("Треугольник валиден:", triangle.is_valid())  # Ожидаемый результат: True
+
+# Проверка принадлежности точки треугольнику
+print("Точка (1, 1) принадлежит треугольнику:", triangle.contains_point((1, 1)))  # Ожидаемый результат: True
 ```
 
-### Работа с прямоугольником
+#### **Сценарии:**
 ```python
-rect = Rectangle(0, 0, 10, 5)
-print(rect.area())  # Выведет 50
-print(rect.contains_point(5, 2))  # Выведет True
-```
+from geometry_logic import check_placement, simulate_field, fill_area_with_rectangles
+from geometry import Circle, Rectangle
 
-### Работа с треугольником
-```python
-triangle = Triangle((0, 0), (5, 0), (2, 3))
-print(triangle.area())  # Выведет 7.5
-print(triangle.contains_point((2, 1)))  # Выведет True
+# Сценарий 1: Проверка размещения фигур
+shapes = [
+    Circle(center_x=3, center_y=3, radius=5),
+    Rectangle(x=0, y=0, width=4, height=3)
+]
+
+# Анализ взаимного расположения фигур
+analysis = check_placement(shapes)
+print("Анализ расположения фигур:", analysis)
+# Ожидаемый результат: список групп фигур, которые пересекаются или находятся одна внутри другой.
+
+# Сценарий 2: Симуляция поля
+shapes = [
+    Circle(center_x=14, center_y=14, radius=5),
+    Rectangle(x=20, y=20, width=10, height=5)
+]
+
+# Проверка, какие фигуры выходят за границы поля
+out_of_bounds = simulate_field(shapes, area_width=50, area_height=50)
+print("Фигуры за границами поля:", out_of_bounds)
+# Ожидаемый результат: информация о фигурах, которые выходят за границы поля.
+
+# Сценарий 3: Заполнение области прямоугольниками
+rectangles = fill_area_with_rectangles(area_width=20, area_height=10, rect_width=3, rect_height=2)
+print("Размещенные прямоугольники:", rectangles)
+# Ожидаемый результат: количество и координаты размещенных прямоугольников.
 ```
